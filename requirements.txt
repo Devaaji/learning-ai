@@ -1,0 +1,7 @@
+openai
+pandas
+langchain
+langchain-community
+langchain-experimental
+python-dotenv
+openpyxl
