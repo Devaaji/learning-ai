@@ -10,16 +10,17 @@ fake = Faker("id_ID")
 
 # Koneksi database
 conn = psycopg2.connect(
-    host=os.getenv("DB_HOST", "127.0.0.1"),
-    port=os.getenv("DB_PORT", 8510),
-    database=os.getenv("DB_NAME", "training-ai"),
-    user=os.getenv("DB_USER", "postgres"),
-    password=os.getenv("DB_PASS", "0000")
+    host=os.getenv("DB_HOST"),
+    port=os.getenv("DB_PORT"),
+    database=os.getenv("DB_NAME"),
+    user=os.getenv("DB_USER"),
+    password=os.getenv("DB_PASS"),
 )
 cur = conn.cursor()
 
 # 1. Buat tabel jika belum ada
-cur.execute("""
+cur.execute(
+    """
 CREATE TABLE IF NOT EXISTS sales_data (
     id SERIAL PRIMARY KEY,
     date DATE,
@@ -28,7 +29,8 @@ CREATE TABLE IF NOT EXISTS sales_data (
     sales INTEGER,
     sales_person VARCHAR(100)
 )
-""")
+"""
+)
 
 # 2. Data dummy
 cities = ["Jakarta", "Bandung", "Surabaya", "Medan", "Yogyakarta"]
@@ -44,10 +46,13 @@ for _ in range(100):
     data.append((date, city, product, sales, sales_person))
 
 # 3. Insert data
-cur.executemany("""
+cur.executemany(
+    """
     INSERT INTO sales_data (date, city, product, sales, sales_person)
     VALUES (%s, %s, %s, %s, %s)
-""", data)
+""",
+    data,
+)
 
 conn.commit()
 cur.close()

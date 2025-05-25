@@ -5,3 +5,8 @@ langchain-community
 langchain-experimental
 python-dotenv
 openpyxl
+fastapi
+uvicorn
+psycopg2-binary
+python-dotenv
+llama-cpp-python
